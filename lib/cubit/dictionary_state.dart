@@ -4,7 +4,7 @@ enum DictionaryStatus { initial, loading, success, notFound, error }
 
 class DictionaryState extends Equatable {
   final DictionaryStatus dictionaryStatus;
-  final List<Dictionary?> dictionaries;
+  final List<Dictionary> dictionaries;
   
 
   const DictionaryState({required this.dictionaryStatus, required this.dictionaries});
@@ -17,7 +17,7 @@ class DictionaryState extends Equatable {
 
   DictionaryState copyWith({
     DictionaryStatus? dictionaryStatus,
-    List<Dictionary?>? dictionaries,
+    List<Dictionary>? dictionaries,
   }) {
     return DictionaryState(
       dictionaryStatus: dictionaryStatus ?? this.dictionaryStatus,

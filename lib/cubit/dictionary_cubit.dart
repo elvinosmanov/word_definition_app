@@ -10,7 +10,7 @@ class DictionaryCubit extends Cubit<DictionaryState> {
   final DictionaryRepository _dictionaryRepository;
   DictionaryCubit(this._dictionaryRepository) : super(DictionaryState.initial());
   // ignore: prefer_final_fields
-  List<Dictionary?> _dictionaries = [];
+  List<Dictionary> _dictionaries = [];
 
   getDictionary(String word) async {
     if (state.dictionaryStatus == DictionaryStatus.loading) return;

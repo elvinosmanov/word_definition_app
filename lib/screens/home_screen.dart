@@ -27,6 +27,7 @@ class BodyPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return BlocListener<DictionaryCubit, DictionaryState>(
       listener: (context, state) {
         if (state.dictionaryStatus == DictionaryStatus.notFound) {
@@ -50,14 +51,15 @@ class BodyPart extends StatelessWidget {
               children: <Widget>[
                 ElevatedButton(
                     onPressed: () {
-                      context.read<DictionaryCubit>().getDictionary("hellofd");
+                      context.read<DictionaryCubit>().getDictionary("bananaf");
                     },
                     child: const Text('Get Press')),
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: state.dictionaries.length,
                   itemBuilder: (context, index) {
-                    return ListTile(title: Text(state.dictionaries[index]!.word));
+                    return ListTile(
+                        leading:  Text(state.dictionaries[index].meanings!=null?'Success':'Not Found'), title: Text(state.dictionaries[index].word));
                   },
                 )
               ],
