@@ -17,7 +17,7 @@ class FirstPage extends StatelessWidget {
         child: BlocListener<DictionaryCubit, DictionaryState>(
           listener: (context, state) {
             if (state.dictionaryStatus == DictionaryStatus.notFound) {
-              snackBarMessage("Word does not have in the dictionary, please try again!", context);
+              snackBarMessage("There is no such word in the dictionary, please try again!", context);
             } else if (state.dictionaryStatus == DictionaryStatus.noInternet) {
               snackBarMessage("No Internet Connection", context);
             } else if (state.dictionaryStatus == DictionaryStatus.success) {
