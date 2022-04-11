@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_definition_app/repository/dictionary_repository.dart';
-import 'package:word_definition_app/screens/home_screen.dart';
-import 'package:word_definition_app/screens/home_screen2.dart';
+import 'package:word_definition_app/screens/first_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       home: RepositoryProvider(
         
         create: (context) => DictionaryRepository(),
-        child: const HomeScreen2(),
+        child: const FirstPage(),
       ),
     );
   }

@@ -1,9 +1,9 @@
-// import 'package:connectivity_plus/connectivity_plus.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:word_definition_app/screens/detail_screen.dart';
 
 // import '../cubit/dictionary_cubit.dart';
+// import '../helper/snackBar.dart';
 // import '../repository/dictionary_repository.dart';
 
 // class HomeScreen extends StatelessWidget {
@@ -43,7 +43,7 @@
 //             children: <Widget>[
 //               ElevatedButton(
 //                   onPressed: () async {
-//                     await context.read<DictionaryCubit>().getDictionary("live");
+//                     await context.read<DictionaryCubit>().getDictionary();
 //                     print("length: " + state.dictionaries.length.toString());
 
 //                     if (state.dictionaryStatus == DictionaryStatus.success) {
@@ -81,15 +81,5 @@
 //         },
 //       ),
 //     );
-//   }
-
-//   void snackBarMessage(String text, BuildContext context) {
-//     ScaffoldMessenger.of(context)
-//       ..hideCurrentSnackBar()
-//       ..showSnackBar(
-//         SnackBar(
-//           content: Text(text),
-//         ),
-//       );
 //   }
 // }

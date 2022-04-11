@@ -24,7 +24,6 @@ class DictionaryCubit extends Cubit<DictionaryState> {
       if (connectivityResult == ConnectivityResult.none) {
         networkStatus = NetworkStatus.isOffline;
         emit(state.copyWith(dictionaryStatus: DictionaryStatus.noInternet));
-        print("No internet connection");
       } else {
         networkStatus = NetworkStatus.isOnline;
         final result = await _dictionaryRepository.getDictionary(state.searchText.trim());
@@ -39,6 +38,7 @@ class DictionaryCubit extends Cubit<DictionaryState> {
     } catch (e) {
       emit(state.copyWith(dictionaryStatus: DictionaryStatus.error));
     }
+    state.copyWith(searchText: '');
   }
 
   searchTextChanged(String value) {
