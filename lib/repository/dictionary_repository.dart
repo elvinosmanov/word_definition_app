@@ -9,7 +9,6 @@ class DictionaryRepository {
     try {
       final response = await http.get(Uri.parse("$baseUrl$word"));
       if (response.statusCode == 200) {
-        // print(response.body);
         return Dictionary.fromJson(jsonDecode(response.body)[0]);
       } else {
         return null;

@@ -14,7 +14,6 @@ class DictionaryCubit extends Cubit<DictionaryState> {
   DictionaryCubit(this._dictionaryRepository) : super(DictionaryState.initial());
   // ignore: prefer_final_fields
   List<Dictionary> _dictionaries = [];
-  NetworkStatus networkStatus = NetworkStatus.isOffline;
   getDictionary() async {
     if (state.dictionaryStatus == DictionaryStatus.loading) return;
     emit(state.copyWith(dictionaryStatus: DictionaryStatus.loading));
@@ -22,23 +21,21 @@ class DictionaryCubit extends Cubit<DictionaryState> {
     try {
       var connectivityResult = await (Connectivity().checkConnectivity());
       if (connectivityResult == ConnectivityResult.none) {
-        networkStatus = NetworkStatus.isOffline;
-        emit(state.copyWith(dictionaryStatus: DictionaryStatus.noInternet));
+        emit(state.copyWith(dictionaryStatus: DictionaryStatus.noInternet, searchText: ''));
       } else {
-        networkStatus = NetworkStatus.isOnline;
         final result = await _dictionaryRepository.getDictionary(state.searchText.trim());
         if (result != null) {
           _dictionaries.insert(0, result);
-          emit(state.copyWith(dictionaryStatus: DictionaryStatus.success, dictionaries: _dictionaries));
+          emit(state.copyWith(dictionaryStatus: DictionaryStatus.success, dictionaries: _dictionaries, searchText: ''));
         } else {
           _dictionaries.insert(0, Dictionary(word: state.searchText));
-          emit(state.copyWith(dictionaryStatus: DictionaryStatus.notFound, dictionaries: _dictionaries));
+          emit(
+              state.copyWith(dictionaryStatus: DictionaryStatus.notFound, dictionaries: _dictionaries, searchText: ''));
         }
       }
     } catch (e) {
       emit(state.copyWith(dictionaryStatus: DictionaryStatus.error));
     }
-    state.copyWith(searchText: '');
   }
 
   searchTextChanged(String value) {

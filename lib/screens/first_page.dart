@@ -165,6 +165,9 @@ class SearchForm extends StatelessWidget {
         context.read<DictionaryCubit>().searchTextChanged(value);
       },
       cursorColor: kBlackColor,
+      onSubmitted: (value) {
+        context.read<DictionaryCubit>().getDictionary();
+      },
       style: const TextStyle(fontSize: 20),
       decoration: InputDecoration(
         hintText: "Search word...",

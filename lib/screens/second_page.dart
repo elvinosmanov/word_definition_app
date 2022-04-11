@@ -17,24 +17,31 @@ class _SecondPageState extends State<SecondPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[100],
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 16),
           _buildBackButton(context),
           if (MediaQuery.of(context).orientation == Orientation.portrait) const SizedBox(height: 50),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Text(
-              widget.dict.word[0].toUpperCase() + widget.dict.word.substring(1),
-              style: const TextStyle(color: kBlackColor, fontSize: 50, fontWeight: FontWeight.w600),
-            ),
-          ),
+          _buildSearchedText(),
           _buildListView()
         ],
       ),
     );
+  }
+
+
+
+
+  Padding _buildSearchedText() {
+    return Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Text(
+            widget.dict.word[0].toUpperCase() + widget.dict.word.substring(1),
+            style: const TextStyle(color: kBlackColor, fontSize: 50, fontWeight: FontWeight.w600),
+          ),
+        );
   }
 
   Expanded _buildListView() {
@@ -73,20 +80,14 @@ class _SecondPageState extends State<SecondPage> {
             ),
           ),
           const SizedBox(height: 20),
-          const Text(
-            'DEFINITION',
-            style: TextStyle(color: kBlackColor, fontSize: 22, fontWeight: FontWeight.w700),
-          ),
+          _buildHeadingText('DEFINITION'),
           const SizedBox(height: 8),
           Text(
             widget.dict.meanings![index].definition ?? 'No definition',
             style: const TextStyle(color: kBlackColor, fontSize: 16),
           ),
           const SizedBox(height: 20),
-          const Text(
-            'EXAMPLE',
-            style: TextStyle(color: kBlackColor, fontSize: 22, fontWeight: FontWeight.w700),
-          ),
+          _buildHeadingText('EXAMPLE'),
           const SizedBox(height: 8),
           Text(
             widget.dict.meanings![index].example ?? 'No example',
@@ -94,60 +95,65 @@ class _SecondPageState extends State<SecondPage> {
           ),
           const SizedBox(height: 20),
           Row(
-            children: const <Widget>[
-              SizedBox(
-                  width: 120,
-                  child: Text('SYNONYMS',
-                      style: TextStyle(color: kBlackColor, fontSize: 22, fontWeight: FontWeight.w700))),
-              SizedBox(width: 110),
-              Text('ANTONYMS', style: TextStyle(color: kBlackColor, fontSize: 22, fontWeight: FontWeight.w700)),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
                 width: 120,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:
-                      widget.dict.meanings![index].synonyms != null && widget.dict.meanings![index].synonyms!.isNotEmpty
-                          ? widget.dict.meanings![index].synonyms!
-                              .map((e) => Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Text(e, style: const TextStyle(color: kBlueColor, fontSize: 16)),
-                                  ))
-                              .toList()
-                          : [
-                              const Padding(
-                                padding: EdgeInsets.only(top: 4),
-                                child: Text('No synonyms', style: TextStyle(color: kBlueColor, fontSize: 16)),
-                              )
-                            ],
-                ),
+                child: _buildHeadingText('SYNONYMS'),
               ),
               const SizedBox(width: 110),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:
-                    widget.dict.meanings![index].antonyms != null && widget.dict.meanings![index].synonyms!.isNotEmpty
-                        ? widget.dict.meanings![index].antonyms!
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: Text(e, style: const TextStyle(color: kBlueColor, fontSize: 16)),
-                                ))
-                            .toList()
-                        : [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 4),
-                              child: Text('No antonyms', style: TextStyle(color: kBlueColor, fontSize: 16)),
-                            )
-                          ],
-              )
+              _buildHeadingText('ANTONYMS')
             ],
           ),
+          _buildSynonymAntonym(index),
         ],
       ),
+    );
+  }
+
+  Row _buildSynonymAntonym(int index) {
+    return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 120,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children:
+                    widget.dict.meanings![index].synonyms != null && widget.dict.meanings![index].synonyms!.isNotEmpty
+                        ? widget.dict.meanings![index].synonyms!.map((e) => _buildBlueText(e)).toList()
+                        : [
+                            _buildBlueText('No synonyms'),
+                          ],
+              ),
+            ),
+            const SizedBox(width: 110),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:
+                  widget.dict.meanings![index].antonyms != null && widget.dict.meanings![index].synonyms!.isNotEmpty
+                      ? widget.dict.meanings![index].antonyms!.map((e) => _buildBlueText(e)).toList()
+                      : [
+                          _buildBlueText('No antonyms'),
+                        ],
+            )
+          ],
+        );
+  }
+
+  Padding _buildBlueText(String e) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Text(
+        e,
+        style: const TextStyle(color: kBlueColor, fontSize: 16),
+      ),
+    );
+  }
+
+  Text _buildHeadingText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(color: kBlackColor, fontSize: 22, fontWeight: FontWeight.w700),
     );
   }
 
@@ -155,23 +161,24 @@ class _SecondPageState extends State<SecondPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: TextButton(
-          onPressed: () {
-            Navigator.maybePop(context);
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const <Widget>[
-              Icon(
-                Icons.arrow_back_ios_new,
-                size: 28,
-              ),
-              SizedBox(width: 4),
-              Text(
-                'Search',
-                style: TextStyle(color: kBlueColor, fontSize: 16),
-              )
-            ],
-          )),
+        onPressed: () {
+          Navigator.maybePop(context);
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: const <Widget>[
+            Icon(
+              Icons.arrow_back_ios_new,
+              size: 28,
+            ),
+            SizedBox(width: 4),
+            Text(
+              'Search',
+              style: TextStyle(color: kBlueColor, fontSize: 16),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
