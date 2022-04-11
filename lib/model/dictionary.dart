@@ -2,8 +2,7 @@ import 'meanings.dart';
 
 class Dictionary {
   late String word;
-  List<Meanings>? meanings;
-
+  late List<Meanings>? meanings;
 
   Dictionary({required this.word, this.meanings});
 
@@ -16,5 +15,4 @@ class Dictionary {
       });
     }
   }
-
 }

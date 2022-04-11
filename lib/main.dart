@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_definition_app/repository/dictionary_repository.dart';
 import 'package:word_definition_app/screens/home_screen.dart';
+import 'package:word_definition_app/screens/home_screen2.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,11 +11,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-        title: 'Material App',
-        home: RepositoryProvider(
-          create: (context) => DictionaryRepository(),
-          child: const HomeScreen(),
-        ));
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Word Definition App',
+      home: RepositoryProvider(
+        
+        create: (context) => DictionaryRepository(),
+        child: const HomeScreen2(),
+      ),
+    );
   }
 }
